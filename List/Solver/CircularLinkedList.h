@@ -1,99 +1,185 @@
-#include <initializer_list>
 #include <iostream>
-#include <sstream>
+#include <string>
+#include <initializer_list>
 #include "Node.h"
+#include <sstream>
 
 namespace mynamespace
 {
-    /*
-    *@brief класс, представл¤ющий циклический связный список.
-    *@tparam Tип данных, хранимых в списке.
-    */
-
     template <typename T>
     class CircularLinkedList;
 
+    /**
+    * @brief Перегруженный оператор вывода в поток.
+    * @param os Поток вывода.
+    * @param list Циклический связный список.
+    * @return Ссылка на поток вывода.
+    */
     template <typename T>
     std::ostream& operator<<(std::ostream& os, const CircularLinkedList<T>& list);
 
+    /**
+    * @brief Перегруженный оператор ввода из потока.
+    *
+    * @param is Поток ввода.
+    * @param list Циклический связный список.
+    * @return Ссылка на поток ввода.
+    */
     template <typename T>
     std::istream& operator>>(std::istream& is, CircularLinkedList<T>& list);
 
-    template <typename T>
-    class CircularLinkedList
+    /**
+    * @brief Класс, представляющий циклический связный список.
+    * Этот класс реализует циклический связный список, где последний элемент списка связан с первым.
+    * Он предоставляет методы для добавления элементов, проверки пустоты списка, преобразования списка в строку и перегрузки операторов
+    * присваивания, вставки и извлечения элементов.
+    * @tparam T Тип элементов, хранящихся в списке.
+    */
+    template<typename T>
+    class CircularLinkedList final
     {
     private:
+        /**
+        * @brief Указатель на последний элемент списка.
+        * Используется для облегчения операций вставки.
+        */
         Node<T>* tail;
+        /**
+        * @brief Указатель на первый элемент списка.
+        */
         Node<T>* head;
-
     public:
+        /**
+        * @brief Конструктор по умолчанию.
+        * Инициализирует пустой циклический список.
+        */
         CircularLinkedList();
-        CircularLinkedList(const CircularLinkedList& other);
-        CircularLinkedList& operator=(const CircularLinkedList& other);
+
+        /**
+        * @brief Конструктор копирования.
+        * Инициализирует новый список как копию другого списка.
+        * @param other Другой список для копирования.
+        */
+        CircularLinkedList(const CircularLinkedList<T>& other);
+
+        /**
+        * @brief Перегруженный оператор присваивания.
+        * Копирует значения из другого списка в текущий.
+        * @param other Другой список для копирования.
+        * @return Ссылка на текущий список.
+        */
+        CircularLinkedList<T>& operator=(const CircularLinkedList<T>& other);
+
+        /**
+        * @brief Конструктор инициализации.
+        * Инициализирует циклический список с помощью списка инициализации.
+        * @param init Список значений для элементов списка.
+        */
         CircularLinkedList(std::initializer_list<T> init);
+
+        /**
+        * @brief Деструктор.
+        * Освобождает память, занимаемую узлами списка.
+        */
         ~CircularLinkedList();
 
+        /**
+        * @brief Добавляет новый элемент в конец списка.
+        * @param value Значение нового элемента.
+        */
         void add(T value);
+
+        /**
+        * @brief Проверяет, является ли список пустым.
+        * @return true, если список пуст, иначе false.
+        */
         bool isEmpty() const;
+
+        /**
+        * @brief Преобразует список в строку.
+        * Преобразует элементы списка в строку с их значениями, разделёнными пробелами.
+        * @return Строковое представление списка.
+        */
         std::string toString() const;
 
-        CircularLinkedList(CircularLinkedList&& other) noexcept;
-        CircularLinkedList& operator=(CircularLinkedList&& other) noexcept;
+        /**
+        * @brief Конструктор перемещения.
+        * Перемещает данные из другого списка в текущий.
+        * @param other Список для перемещения.
+        */
+        CircularLinkedList(CircularLinkedList<T>&& other) noexcept;
+
+        /**
+        * @brief Оператор перемещения.
+        * Перемещает данные из другого списка в текущий.
+        * @param other Список для перемещения.
+        * @return Ссылка на текущий список.
+        */
+        CircularLinkedList<T>& operator=(CircularLinkedList<T>&& other) noexcept;
     };
-    template<typename T>
-    CircularLinkedList<T>::CircularLinkedList() : head(nullptr), tail(nullptr) {}
 
     template<typename T>
-    CircularLinkedList<T>::CircularLinkedList(const CircularLinkedList& other)
-    {
-        head = tail = nullptr;
-        Node* current = other.head;
-        if (current != nullptr)
-        {
-            do {
-                add(current->data);
-                current = current->next;
-            } while (current != other.head);
-        }
-    }
+    CircularLinkedList<T>::CircularLinkedList() : head{ nullptr }, tail(nullptr) {}
 
     template<typename T>
-    CircularLinkedList<T>::CircularLinkedList(std::initializer_list<T> init) : tail(nullptr)
+    CircularLinkedList<T>::CircularLinkedList(std::initializer_list<T> init) : CircularLinkedList()
     {
-        for (int value : init)
+        for (const auto& value : init)
         {
             add(value);
         }
     }
 
     template<typename T>
-    CircularLinkedList<T>::~CircularLinkedList()
+    CircularLinkedList<T>::CircularLinkedList(const CircularLinkedList<T>& other) : CircularLinkedList()
     {
-        Node* current = head;
-        Node* nextNode;
-        while (current != tail && current != nullptr) {
-            nextNode = current->next;
-            delete current;
-            current = nextNode;
+        if (other.tail)
+        {
+            Node<T>* current = other.tail->next;
+            do {
+                add(current->data);
+                current = current->next;
+            } while (current != other.tail->next);
         }
     }
 
     template<typename T>
-    void CircularLinkedList<T>::add(T value)
+    CircularLinkedList<T>::CircularLinkedList(CircularLinkedList<T>&& other) noexcept : head(other.head), tail(other.tail)
     {
-        Node* newNode = new Node(value);
-        if (isEmpty())
-        {
-            head = tail = newNode;
-            tail->next = head;
-        }
-        else
-        {
-            tail->next = newNode;
-            tail = newNode;
-            tail->next = head;
-        }
+        other.head = other.tail = nullptr;
+    }
 
+    template<typename T>
+    CircularLinkedList<T>::~CircularLinkedList()
+    {
+        if (head)
+        {
+            Node<T>* current = head;
+            Node<T>* nextNode;
+            do {
+                nextNode = current->next;
+                delete current;
+                current = nextNode;
+            } while (current != head);
+        }
+    }
+
+    template<typename T>
+    CircularLinkedList<T>& CircularLinkedList<T>::operator=(const CircularLinkedList<T>& other)
+    {
+        if (this != &other) {
+            this->~CircularLinkedList();
+
+            if (other.tail)
+            {
+                Node<T>* current = other.tail->next;
+                do {
+                    add(current->data);
+                    current = current->next;
+                } while (current != other.tail->next);
+            }
+        }
+        return *this;
     }
 
     template<typename T>
@@ -107,12 +193,12 @@ namespace mynamespace
     {
         std::stringstream buffer;
 
-        if (tail == nullptr) {
+        if (isEmpty()) {
             return "[]";
         }
 
         buffer << "[";
-        Node* current = tail->next;
+        Node<T>* current = tail->next;
 
         do {
             buffer << current->data;
@@ -128,30 +214,19 @@ namespace mynamespace
     }
 
     template<typename T>
-    CircularLinkedList<T>& CircularLinkedList<T>::operator=(const CircularLinkedList& other)
+    CircularLinkedList<T>& CircularLinkedList<T>::operator=(CircularLinkedList<T>&& other) noexcept
     {
-        if (this != &other) {
-            Node* current = head;
-            while (current != nullptr && current != tail) {
-                Node* nextNode = current->next;
-                delete current;
-                current = nextNode;
-            }
-            head = tail = nullptr;
-
-            current = other.head;
-            if (current != nullptr) {
-                do {
-                    add(current->data);
-                    current = current->next;
-                } while (current != other.head);
-            }
+        if (this != &other)
+        {
+            this->~CircularLinkedList();
+            head = other.head;
+            tail = other.tail;
+            other.head = other.tail = nullptr;
         }
         return *this;
     }
-
     template<typename T>
-    std::ostream& operator<<(std::ostream& os, CircularLinkedList<T>& list)
+    std::ostream& operator<<(std::ostream& os, const CircularLinkedList<T>& list)
     {
         os << list.toString();
         return os;
@@ -159,9 +234,8 @@ namespace mynamespace
 
     template<typename T>
     std::istream& operator>>(std::istream& is, CircularLinkedList<T>& list)
-
     {
-        int value;
+        T value;
         while (is >> value) {
             list.add(value);
         }
@@ -169,22 +243,19 @@ namespace mynamespace
     }
 
     template<typename T>
-    CircularLinkedList<T>::CircularLinkedList(CircularLinkedList<T>&& other) noexcept : head(other.head), tail(other.tail)
+    void CircularLinkedList<T>::add(T value)
     {
-        other.head = other.tail = nullptr;
-    }
-
-    template<typename T>
-    CircularLinkedList<T>& CircularLinkedList<T>::operator=(CircularLinkedList<T>&& other) noexcept
-    {
-        if (this == &other)
+        Node<T>* newNode = new Node<T>(value);
+        if (isEmpty())
         {
-            return *this;
+            head = tail = newNode;
+            tail->next = head;
         }
-        head = other.head;
-        tail = other.tail;
-        other.head = other.tail = nullptr;
-
-        return *this;
+        else
+        {
+            newNode->next = head;
+            tail->next = newNode;
+            tail = newNode;
+        }
     }
 }

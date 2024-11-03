@@ -3,7 +3,7 @@ class Node
 {
 public:
     T data;
-    Node* next;
+    Node* next = nullptr;
 
     Node(T value) : data(value), next(nullptr) {}
 };

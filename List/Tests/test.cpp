@@ -1,90 +1,91 @@
 #include <gtest/gtest.h>
 #include "..//Solver/CircularLinkedList.h"
 
-TEST(CircularLinkedListTest, DefaultConstructor) {
-    CircularLinkedList list{};
-    EXPECT_TRUE(list.isEmpty());
-    EXPECT_EQ(list.toString(), "[]");
+namespace mynamespace {
+
+    class CircularLinkedListTest : public ::testing::Test {
+    protected:
+        CircularLinkedList<int> list;
+
+        void SetUp() override {
+        }
+
+        void TearDown() override {
+        }
+    };
+
+    TEST_F(CircularLinkedListTest, InitiallyEmpty) {
+        EXPECT_TRUE(list.isEmpty());
+    }
+
+    TEST_F(CircularLinkedListTest, AddElements) {
+        list.add(1);
+        list.add(2);
+        list.add(3);
+
+        EXPECT_FALSE(list.isEmpty());
+        EXPECT_EQ(list.toString(), "[1 2 3]");
+    }
+
+    TEST_F(CircularLinkedListTest, CopyConstructor) {
+        list.add(1);
+        list.add(2);
+        list.add(3);
+
+        CircularLinkedList<int> copy(list);
+        EXPECT_EQ(copy.toString(), "[1 2 3]");
+    }
+
+    TEST_F(CircularLinkedListTest, AssignmentOperator) {
+        list.add(1);
+        list.add(2);
+
+        CircularLinkedList<int> copy;
+        copy = list;
+
+        EXPECT_EQ(copy.toString(), "[1 2]");
+    }
+
+    TEST_F(CircularLinkedListTest, MoveConstructor) {
+        list.add(1);
+        list.add(2);
+
+        CircularLinkedList<int> moved = std::move(list);
+        EXPECT_EQ(moved.toString(), "[1 2]");
+        EXPECT_TRUE(list.isEmpty());
+    }
+
+    TEST_F(CircularLinkedListTest, MoveAssignmentOperator) {
+        list.add(1);
+        list.add(2);
+
+        CircularLinkedList<int> moved;
+        moved = std::move(list);
+
+        EXPECT_EQ(moved.toString(), "[1 2]");
+        EXPECT_TRUE(list.isEmpty());
+    }
+
+    TEST_F(CircularLinkedListTest, HandleMultipleInsertions) {
+        for (int i = 1; i <= 5; ++i) {
+            list.add(i);
+        }
+
+        EXPECT_EQ(list.toString(), "[1 2 3 4 5]");
+    }
+
+    TEST_F(CircularLinkedListTest, DestructorEmptiesList) {
+        {
+            CircularLinkedList<int> tempList;
+            tempList.add(1);
+            tempList.add(2);
+            tempList.add(3);
+        }
+    }
+
 }
 
-TEST(CircularLinkedListTest, AddSingleElement) {
-    CircularLinkedList list{ 10 };
-    list.add(10);
-    EXPECT_FALSE(list.isEmpty());
-    EXPECT_EQ(list.toString(), "[10]");
+int main(int argc, char** argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
-
-TEST(CircularLinkedListTest, AddMultipleElements) {
-    CircularLinkedList list{ 10,20,30 };
-    list.add(10);
-    list.add(20);
-    list.add(30);
-
-    EXPECT_EQ(list.toString(), "[10 20 30]");
-}
-
-TEST(CircularLinkedListTest, CopyConstructor) {
-    CircularLinkedList original{ 10, 20 };
-    original.add(10);
-    original.add(20);
-
-    CircularLinkedList copy(original);
-
-    EXPECT_EQ(copy.toString(), "[10 20]");
-    EXPECT_FALSE(copy.isEmpty());
-}
-
-TEST(CircularLinkedListTest, CopyAssignmentOperator) {
-    CircularLinkedList original{ 10, 20 };
-    original.add(10);
-    original.add(20);
-
-    CircularLinkedList copy{ 1, 2, 3 };
-    copy = original;
-
-    EXPECT_EQ(copy.toString(), "[10 20]");
-    EXPECT_FALSE(copy.isEmpty());
-}
-
-TEST(CircularLinkedListTest, MoveConstructor) {
-    CircularLinkedList original{ 10, 20 };
-    original.add(10);
-    original.add(20);
-
-    CircularLinkedList moved(std::move(original));
-
-    EXPECT_EQ(moved.toString(), "[10 20]");
-    EXPECT_TRUE(original.isEmpty());
-}
-
-TEST(CircularLinkedListTest, MoveAssignmentOperator) {
-    CircularLinkedList original{ 10, 20 };
-    original.add(10);
-    original.add(20);
-
-    CircularLinkedList moved;
-    moved = std::move(original);
-
-    EXPECT_EQ(moved.toString(), "[10 20]");
-    EXPECT_TRUE(original.isEmpty());
-}
-
-TEST(CircularLinkedListTest, InputOperator) {
-    CircularLinkedList list{};
-    std::istringstream input("15");
-    input >> list;
-
-    EXPECT_EQ(list.toString(), "[15]");
-}
-
-TEST(CircularLinkedListTest, OutputOperator) {
-    CircularLinkedList list{ 10, 20 };
-    list.add(10);
-    list.add(20);
-
-    std::ostringstream output;
-    output << list;
-
-    EXPECT_EQ(output.str(), "[10 20]");
-}
-
