@@ -184,27 +184,17 @@ namespace mynamespace
     }
 
     template<typename T>
-    CircularLinkedList<T>::~CircularLinkedList()
-    {
-        if (nullptr != head)
-        {
-            Node<T>* current = head;
-            Node<T>* nextNode;
-            do {
-                nextNode = current->next;
-                delete current;
-                current = nextNode;
-            } while (current != head);
-        }
-    }
-
-    template<typename T>
     CircularLinkedList<T>& CircularLinkedList<T>::operator=(const CircularLinkedList<T>& other)
     {
         CircularLinkedList temp(other);
         std::swap(this->tail, temp.tail);
         std::swap(this->head, temp.head);
         return *this;
+    }
+
+    template <typename T>
+    CircularLinkedList<T>::~CircularLinkedList() {
+        delete[] head;
     }
 
     template<typename T>
