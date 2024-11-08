@@ -194,7 +194,7 @@ namespace mynamespace
 
     template <typename T>
     CircularLinkedList<T>::~CircularLinkedList() {
-        delete[] head;
+        delete[] data;
     }
 
     template<typename T>
