@@ -194,15 +194,7 @@ namespace mynamespace
 
     template <typename T>
     CircularLinkedList<T>::~CircularLinkedList() {
-        if (head) {
-            Node<T>* current = head;
-            Node<T>* nextNode;
-            do {
-                nextNode = current->next;
-                delete current;
-                current = nextNode;
-            } while (current != head);
-        }
+        delete[] data;
     }
 
     template<typename T>
