@@ -193,8 +193,18 @@ namespace mynamespace
     }
 
     template <typename T>
-    CircularLinkedList<T>::~CircularLinkedList() {
-        delete[] data;
+    CircularLinkedList<T>::~CircularLinkedList()
+    {
+        if (!isEmpty())
+        {
+            Node<T>* current = head;
+            do {
+                Node<T>* toDelete = current;
+                current = current->next;
+                delete toDelete;
+            } while (current != head);
+        }
+        head = tail = nullptr;
     }
 
     template<typename T>
