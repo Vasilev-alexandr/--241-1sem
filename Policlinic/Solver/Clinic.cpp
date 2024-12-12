@@ -1,7 +1,7 @@
 #include "Clinic.h"
 #include <iostream>
 
-void Clinic::addDoctor(std::shared_ptr<Doctor> doctor) 
+void Clinic::addDoctor(std::shared_ptr<Doctor> doctor)
 {
     doctors.push_back(doctor);
 }
@@ -20,7 +20,7 @@ void Clinic::listDoctors() const
     }
 }
 
-void Clinic::listPatients() const 
+void Clinic::listPatients() const
 {
     std::cout << "Список пациентов поликлиники:" << std::endl;
     for (const auto& patient : patients)
@@ -41,7 +41,7 @@ void Clinic::showPatientAppointments(const std::string& patientName) const
     std::cout << "Пациент с именем " << patientName << " не найден." << std::endl;
 }
 
-void Clinic::addAppointmentToPatient(const std::string& patientName, std::shared_ptr<Schedule> schedule) 
+void Clinic::addAppointmentToPatient(const std::string& patientName, std::shared_ptr<Schedule> schedule)
 {
     for (const auto& patient : patients)
     {

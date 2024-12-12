@@ -15,10 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Patient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Doctor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Patient.h">
+    <ClInclude Include="Schedule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Clinic.h">
@@ -26,10 +29,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Patient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Doctor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Patient.cpp">
+    <ClCompile Include="Schedule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Clinic.cpp">

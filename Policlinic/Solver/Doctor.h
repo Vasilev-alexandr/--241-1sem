@@ -5,7 +5,7 @@
 
 class Doctor final : public std::enable_shared_from_this<Clinic> {
 public:
-   
+
     std::string getName() const;
 
     std::string getSpecialty() const;

@@ -12,7 +12,7 @@ std::string Doctor::getSpecialty() const
     return specialty;
 }
 
-void Doctor::printInfo() const 
+void Doctor::printInfo() const
 {
     std::cout << "Врач: " << name << ", Специальность: " << specialty
         << ", Расписание: ";

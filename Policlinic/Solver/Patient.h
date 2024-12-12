@@ -15,7 +15,7 @@ public:
     void addAppointment(std::shared_ptr<Schedule> appointment);
 
     void printInfo() const;
-   
+
     void printAppointments() const;
 
 private:

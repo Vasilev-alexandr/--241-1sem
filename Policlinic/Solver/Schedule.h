@@ -13,5 +13,5 @@ public:
 
 private:
     Schedule(const std::string& dateTime) : dateTime(dateTime) {}
-    std::string dateTime; 
+    std::string dateTime;
 };
