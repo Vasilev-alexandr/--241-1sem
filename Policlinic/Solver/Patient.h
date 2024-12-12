@@ -1,24 +1,26 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <memory>
+#include "Schedule.h"
 
 class Patient {
 
 public:
-    Patient(const std::string& name, int age);
 
     std::string getName() const;
 
     int getAge() const;
 
-    void addAppointment(const std::string& appointmentInfo);
+    void addAppointment(std::shared_ptr<Schedule> appointment);
 
     void printInfo() const;
-
+   
     void printAppointments() const;
 
 private:
+    Patient(const std::string& name, int age);
     std::string name;
     int age;
-    std::vector<std::string> appointments;
+    std::vector<std::shared_ptr<Schedule>> appointments;
 };

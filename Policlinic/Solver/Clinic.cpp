@@ -36,22 +36,18 @@ void Clinic::showPatientAppointments(const std::string& patientName) const
         if (patient->getName() == patientName)
         {
             patient->printAppointments();
-            return;
         }
     }
     std::cout << "Пациент с именем " << patientName << " не найден." << std::endl;
 }
 
-void Clinic::addAppointmentToPatient(const std::string& patientName, const std::string& doctorName) 
+void Clinic::addAppointmentToPatient(const std::string& patientName, std::shared_ptr<Schedule> schedule) 
 {
-    for (auto& patient : patients)
+    for (const auto& patient : patients)
     {
         if (patient->getName() == patientName)
         {
-            patient->addAppointment("Прием у врача: " + doctorName);
-            std::cout << "Запись добавлена: " << patientName << " записан на прием к " << doctorName << std::endl;
-            return;
+            patient->addAppointment(schedule);
         }
     }
-    std::cout << "Пациент с именем " << patientName << " не найден." << std::endl;
 }

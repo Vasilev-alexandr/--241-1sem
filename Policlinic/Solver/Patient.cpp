@@ -12,9 +12,9 @@ int Patient::getAge() const
     return age;
 }
 
-void Patient::addAppointment(const std::string& appointmentInfo) 
+void Patient::addAppointment(std::shared_ptr<Schedule> appointment)
 {
-    appointments.push_back(appointmentInfo);
+    appointments.push_back(appointment);
 }
 
 void Patient::printInfo() const 
@@ -27,6 +27,7 @@ void Patient::printAppointments() const
     std::cout << "Записи на прием: " << std::endl;
     for (const auto& appointment : appointments)
     {
-        std::cout << " - " << appointment << std::endl;
+        std::cout << " - ";
+        appointment->print();
     }
 }
