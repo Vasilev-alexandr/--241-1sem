@@ -3,7 +3,7 @@
 #include <memory>
 #include "Schedule.h"
 
-class Doctor final : public std::enable_shared_from_this<Clinic> {
+class Doctor final : public std::enable_shared_from_this<Doctor> {
 public:
 
     std::string getName() const;
