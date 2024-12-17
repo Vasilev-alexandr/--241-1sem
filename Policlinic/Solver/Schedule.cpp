@@ -1,17 +1,15 @@
 #include "Schedule.h"
 #include <iostream>
 
-std::string Schedule::getDateTime() const
-{
-    return dateTime;
-}
+Schedule::Schedule(std::shared_ptr<Doctor> doctor, std::shared_ptr<Patient> patient) : doctor(doctor), patient(patient) {}
 
-void Schedule::setDateTime(const std::string& newDateTime)
+std::shared_ptr<Schedule> Schedule::CreateSchedule(std::shared_ptr<Doctor> doctor, std::shared_ptr<Patient> patient)
 {
-    dateTime = newDateTime;
+    return std::make_shared<Schedule>(doctor, patient);
 }
 
 void Schedule::print() const
 {
-    std::cout << "Расписание: " << dateTime << std::endl;
+    std::cout << "Расписание для пациента: " << patient->getName()
+        << " у врача: " << doctor->getName() << std::endl;
 }

@@ -3,6 +3,12 @@
 
 Patient::Patient(const std::string& name, int age) : name(name), age(age) {}
 
+
+std::shared_ptr<Patient> Patient::CreatePatient(const std::string& name, int age) 
+{
+    return std::make_shared<Patient>(name, age);
+}
+
 std::string Patient::getName() const
 {
     return name;
@@ -12,9 +18,9 @@ int Patient::getAge() const
     return age;
 }
 
-void Patient::addAppointment(std::shared_ptr<Schedule> appointment)
+void Patient::addAppointment(std::shared_ptr<Schedule> schedule)
 {
-    appointments.push_back(appointment);
+    schedules.push_back(schedule);
 }
 
 void Patient::printInfo() const
@@ -25,9 +31,9 @@ void Patient::printInfo() const
 void Patient::printAppointments() const
 {
     std::cout << "Записи на прием: " << std::endl;
-    for (const auto& appointment : appointments)
+    for (const auto& schedule : schedules)
     {
         std::cout << " - ";
-        appointment->print();
+        schedule->print();
     }
 }

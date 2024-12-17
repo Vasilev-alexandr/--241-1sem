@@ -1,10 +1,14 @@
 #pragma once
 #include <string>
 #include <memory>
-#include "Schedule.h"
+
+
+class Schedule;
 
 class Doctor final : public std::enable_shared_from_this<Doctor> {
 public:
+
+    static std::shared_ptr<Doctor> CreateDoctor(const std::string& name, const std::string& specialty);
 
     std::string getName() const;
 
@@ -16,5 +20,4 @@ private:
     Doctor(const std::string& name, const std::string& specialty);
     std::string name;
     std::string specialty;
-    std::shared_ptr<Schedule> schedule;
 };
