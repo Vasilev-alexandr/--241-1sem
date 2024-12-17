@@ -14,7 +14,7 @@ public:
 
     int getAge() const;
 
-    void addAppointment(std::shared_ptr<Schedule> schedule);
+    void addAppointment(Schedule* schedule);
 
     void printInfo() const;
 
@@ -24,5 +24,5 @@ private:
     Patient(const std::string& name, int age);
     std::string name;
     int age;
-    std::vector<std::shared_ptr<Schedule>> schedules;;
+    std::vector<Schedule*> schedules;
 };

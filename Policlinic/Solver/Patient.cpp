@@ -18,7 +18,7 @@ int Patient::getAge() const
     return age;
 }
 
-void Patient::addAppointment(std::shared_ptr<Schedule> schedule)
+void Patient::addAppointment(Schedule* schedule)
 {
     schedules.push_back(schedule);
 }
