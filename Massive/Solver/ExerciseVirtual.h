@@ -24,7 +24,7 @@ namespace miit::matrix::exercises
             std::unique_ptr<miit::algebra::Generator<T>> generator,
             std::ostream& out = std::cout);
 
-        virtual ~ExerciseVirtual();
+        virtual ~ExerciseVirtual() = 0 {};
 
         void Run();
     };

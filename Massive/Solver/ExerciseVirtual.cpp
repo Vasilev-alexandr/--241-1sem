@@ -15,9 +15,6 @@ namespace miit::matrix::exercises
     }
 
     template <typename T>
-    ExerciseVirtual<T>::~ExerciseVirtual() = default;
-
-    template <typename T>
     void ExerciseVirtual<T>::Run()
     {
         out << "=== " << title() << " ===" << std::endl;

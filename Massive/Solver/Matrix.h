@@ -11,33 +11,27 @@ namespace miit::algebra
     {
     private:
         std::vector<std::vector<T>> data;
-        int rows;
-        int cols;
+        size_t rows;
+        size_t cols;
 
     public:
-        Matrix(int rows, int cols);
-        Matrix(int rows, int cols, Generator<T>& generator);
-        Matrix(const Matrix& other);
-        Matrix(Matrix&& other) noexcept;
-        ~Matrix() = default;
+        Matrix(size_t rows, size_t cols);
+        Matrix(size_t rows, size_t cols, Generator<T>& generator);
+       
+        std::vector<T>& operator[](size_t index);
+        const std::vector<T>& operator[](size_t index) const;
 
-        Matrix& operator=(const Matrix& other);
-        Matrix& operator=(Matrix&& other) noexcept;
-
-        std::vector<T>& operator[](int index);
-        const std::vector<T>& operator[](int index) const;
-
-        int getRows() const;
-        int getCols() const;
+        size_t getRows() const;
+        size_t getCols() const;
 
         void fill(Generator<T>& generator);
         std::string toString() const;
 
         friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix)
         {
-            for (int i = 0; i < matrix.rows; ++i)
+            for (size_t i = 0; i < matrix.rows; ++i)
             {
-                for (int j = 0; j < matrix.cols; ++j)
+                for (size_t j = 0; j < matrix.cols; ++j)
                 {
                     os << matrix.data[i][j] << " ";
                 }
