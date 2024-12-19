@@ -1,4 +1,6 @@
 #include "Schedule.h"
+#include "Doctor.h"
+#include "Patient.h"
 #include <iostream>
 
 Schedule::Schedule(std::shared_ptr<Doctor> doctor, std::shared_ptr<Patient> patient) : doctor(doctor), patient(patient) {}

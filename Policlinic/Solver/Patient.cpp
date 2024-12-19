@@ -1,4 +1,5 @@
 #include "Patient.h"
+#include "Schedule.h"
 #include <iostream>
 
 Patient::Patient(const std::string& name, int age) : name(name), age(age) {}
@@ -18,7 +19,7 @@ int Patient::getAge() const
     return age;
 }
 
-void Patient::addAppointment(Schedule* schedule)
+void Patient::addAppointment(std::shared_ptr<Schedule> schedule)
 {
     schedules.push_back(schedule);
 }

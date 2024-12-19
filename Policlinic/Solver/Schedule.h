@@ -17,6 +17,4 @@ private:
     Schedule(std::shared_ptr<Doctor> doctor, std::shared_ptr<Patient> patient);
     std::shared_ptr<Doctor> doctor;
     std::shared_ptr<Patient> patient;
-    friend class Doctor;
-    friend class Patient;
 };

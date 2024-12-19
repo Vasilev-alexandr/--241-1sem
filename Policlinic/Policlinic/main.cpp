@@ -14,8 +14,8 @@ int main() {
     auto patient1 = Patient::CreatePatient("Сидоров С.С.", 45);
     auto patient2 = Patient::CreatePatient("Волкова А.А.", 32);
 
-    auto schedule1 = std::make_shared<Schedule>(doctor1, patient1);
-    auto schedule2 = std::make_shared<Schedule>(doctor2, patient2);
+    auto schedule1 = Schedule::CreateSchedule(doctor1, patient1);
+    auto schedule2 = Schedule::CreateSchedule(doctor2, patient2);
 
     patient1->addAppointment(schedule1);
     patient2->addAppointment(schedule2);
