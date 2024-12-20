@@ -7,7 +7,13 @@ Schedule::Schedule(std::shared_ptr<Doctor> doctor, std::shared_ptr<Patient> pati
 
 std::shared_ptr<Schedule> Schedule::CreateSchedule(std::shared_ptr<Doctor> doctor, std::shared_ptr<Patient> patient)
 {
-    return std::make_shared<Schedule>(doctor, patient);
+    auto schedule = std::make_shared<Schedule>(doctor, patient);
+
+    doctor->addSchedule(schedule);
+    patient->addAppointment(schedule);
+
+    return schedule;
+
 }
 
 void Schedule::print() const

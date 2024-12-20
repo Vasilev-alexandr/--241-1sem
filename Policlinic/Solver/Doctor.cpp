@@ -1,4 +1,5 @@
 #include "Doctor.h"
+#include "Schedule.h"
 #include <iostream>
 
 Doctor::Doctor(const std::string& name, const std::string& specialty) : name(name), specialty(specialty) {}
@@ -16,8 +17,21 @@ std::string Doctor::getSpecialty() const
 {
     return specialty;
 }
+void Doctor::addSchedule(std::shared_ptr<Schedule> schedule)
+{
+    schedules.push_back(schedule);
+}
 
 void Doctor::printInfo() const
 {
     std::cout << "Врач: " << name << ", Специальность: " << specialty << std::endl;
+}
+
+void Doctor::printSchedules() const 
+{
+    std::cout << "Расписания врача:" << std::endl;
+    for (const auto& schedule : schedules)
+    {
+        schedule->print();
+    }
 }

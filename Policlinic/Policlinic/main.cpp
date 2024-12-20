@@ -17,10 +17,11 @@ int main() {
     auto schedule1 = Schedule::CreateSchedule(doctor1, patient1);
     auto schedule2 = Schedule::CreateSchedule(doctor2, patient2);
 
-    patient1->addAppointment(schedule1);
-    patient2->addAppointment(schedule2);
+    std::cout << "Информация о врачах:" << std::endl;
+    doctor1->printInfo();
+    doctor2->printInfo();
 
-    std::cout << "Список пациентов:" << std::endl;
+    std::cout << "\nИнформация о пациентах:" << std::endl;
     patient1->printInfo();
     patient2->printInfo();
 

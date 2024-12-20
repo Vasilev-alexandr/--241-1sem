@@ -19,7 +19,7 @@ int Patient::getAge() const
     return age;
 }
 
-void Patient::addAppointment(std::shared_ptr<Schedule> schedule)
+void Patient::addAppointment(std::shared_ptr<Schedule>& schedule)
 {
     schedules.push_back(schedule);
 }
@@ -32,9 +32,15 @@ void Patient::printInfo() const
 void Patient::printAppointments() const
 {
     std::cout << "Записи на прием: " << std::endl;
-    for (const auto& schedule : schedules)
+    for (const auto& weakSchedule : schedules)
     {
-        std::cout << " - ";
-        schedule->print();
+        if (auto schedule = weakSchedule.lock())
+        {
+            schedule->print();
+        }
+        else
+        {
+            std::cout << "Расписание больше не существует." << std::endl;
+        }
     }
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
-
+#include <vector>
 
 class Schedule;
 
@@ -14,10 +14,15 @@ public:
 
     std::string getSpecialty() const;
 
+    void addSchedule(std::shared_ptr<Schedule> schedule);
+
     void printInfo() const;
+
+    void printSchedules() const;
 
 private:
     Doctor(const std::string& name, const std::string& specialty);
     std::string name;
     std::string specialty;
+    std::vector<std::shared_ptr<Schedule>> schedules;
 };
