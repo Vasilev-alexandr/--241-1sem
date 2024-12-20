@@ -25,13 +25,20 @@ void Doctor::addSchedule(std::shared_ptr<Schedule> schedule)
 void Doctor::printInfo() const
 {
     std::cout << "Врач: " << name << ", Специальность: " << specialty << std::endl;
+    printSchedules();
 }
 
 void Doctor::printSchedules() const 
 {
     std::cout << "Расписания врача:" << std::endl;
-    for (const auto& schedule : schedules)
+    for (const auto& weakSchedule : schedules)
     {
-        schedule->print();
+        if (auto schedule = weakSchedule.lock())
+        {
+            schedule->print();
+        }
+        else {
+            std::cout << "Расписание больше не существует." << std::endl;
+        }
     }
 }
