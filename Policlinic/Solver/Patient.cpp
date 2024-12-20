@@ -22,6 +22,7 @@ int Patient::getAge() const
 void Patient::addAppointment(std::shared_ptr<Schedule>& schedule)
 {
     schedules.push_back(schedule);
+    schedule->getPatient() = shared_from_this();
 }
 
 void Patient::printInfo() const

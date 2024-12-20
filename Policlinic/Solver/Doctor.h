@@ -24,5 +24,5 @@ private:
     Doctor(const std::string& name, const std::string& specialty);
     std::string name;
     std::string specialty;
-    std::vector<std::shared_ptr<Schedule>> schedules;
+    std::vector<std::weak_ptr<Schedule>> schedules;
 };

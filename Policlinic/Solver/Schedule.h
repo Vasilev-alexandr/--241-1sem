@@ -13,6 +13,10 @@ public:
 
     void print() const;
 
+    std::shared_ptr<Doctor> getDoctor();
+
+    std::shared_ptr<Patient> getPatient();
+
 private:
     Schedule(std::shared_ptr<Doctor> doctor, std::shared_ptr<Patient> patient);
     std::shared_ptr<Doctor> doctor;

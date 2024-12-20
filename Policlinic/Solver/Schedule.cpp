@@ -21,3 +21,13 @@ void Schedule::print() const
     std::cout << "Расписание для пациента: " << patient->getName()
         << " у врача: " << doctor->getName() << std::endl;
 }
+
+std::shared_ptr<Doctor> Schedule::getDoctor()
+{
+    return doctor;
+}
+
+std::shared_ptr<Patient> Schedule::getPatient()
+{
+    return patient;
+}

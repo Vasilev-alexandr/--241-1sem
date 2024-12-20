@@ -20,6 +20,7 @@ std::string Doctor::getSpecialty() const
 void Doctor::addSchedule(std::shared_ptr<Schedule> schedule)
 {
     schedules.push_back(schedule);
+    schedule ->getDoctor() = shared_from_this();
 }
 
 void Doctor::printInfo() const
