@@ -10,9 +10,9 @@
 int main()
 {
     setlocale(LC_ALL, "RU");
-    std::unique_ptr<miit::algebra::Generator<int>> randomGenerator = std::make_unique<miit::algebra::RandomGenerator<int>>(1, 100);
+    std::unique_ptr<miit::algebra::Generator> randomGenerator = std::make_unique<miit::algebra::RandomGenerator>(1, 100);
 
-    MyExercise<int> exercise(3, 3, std::move(randomGenerator));
+    MyExercise exercise(3, 3, std::move(randomGenerator));
 
     exercise.Run();
 

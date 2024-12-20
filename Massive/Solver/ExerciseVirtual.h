@@ -6,11 +6,10 @@
 
 namespace miit::matrix::exercises
 {
-    template <typename T>
     class ExerciseVirtual
     {
     protected:
-        std::unique_ptr<miit::algebra::Matrix<T>> matrix;
+        std::unique_ptr<miit::algebra::Matrix> matrix;
         std::ostream& out;
 
         virtual std::string title() const noexcept = 0;
@@ -21,7 +20,7 @@ namespace miit::matrix::exercises
         explicit ExerciseVirtual(
             const int rows,
             const int columns,
-            std::unique_ptr<miit::algebra::Generator<T>> generator,
+            std::unique_ptr<miit::algebra::Generator> generator,
             std::ostream& out = std::cout);
 
         virtual ~ExerciseVirtual() = 0 {};

@@ -3,19 +3,17 @@
 
 namespace miit::matrix::exercises
 {
-    template <typename T>
-    ExerciseVirtual<T>::ExerciseVirtual(
+    ExerciseVirtual::ExerciseVirtual(
         const int rows,
         const int columns,
-        std::unique_ptr<miit::algebra::Generator<T>> generator,
+        std::unique_ptr<miit::algebra::Generator> generator,
         std::ostream& out)
         : out(out)
     {
-        matrix = std::make_unique<miit::algebra::Matrix<T>>(rows, columns, *generator);
+        matrix = std::make_unique<miit::algebra::Matrix>(rows, columns, *generator);
     }
 
-    template <typename T>
-    void ExerciseVirtual<T>::Run()
+    void ExerciseVirtual::Run()
     {
         out << "=== " << title() << " ===" << std::endl;
 

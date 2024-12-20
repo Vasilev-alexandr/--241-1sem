@@ -2,14 +2,12 @@
 
 namespace miit::algebra
 {
-    template <typename T>
-    IStreamGenerator<T>::IStreamGenerator(std::istream& in) : in{ in } {}
+    IStreamGenerator::IStreamGenerator(std::istream& in) : in(in) {}
 
-    template <typename T>
-    T IStreamGenerator<T>::generate()
+    int IStreamGenerator::generate()
     {
-        T value;
-        this->in >> value;
+        int value;
+        in >> value;
         return value;
     }
 }

@@ -2,15 +2,13 @@
 
 namespace miit::algebra
 {
-    template <typename T>
-    RandomGenerator<T>::RandomGenerator(const T min, const T max)
+    RandomGenerator::RandomGenerator(const int min, const int max)
     {
         this->generator = std::mt19937(std::random_device{}());
-        this->distribution = std::uniform_int_distribution<T>(min, max);
+        this->distribution = std::uniform_int_distribution<int>(min, max);
     }
 
-    template <typename T>
-    T RandomGenerator<T>::generate()
+    int RandomGenerator::generate()
     {
         return this->distribution(this->generator);
     }

@@ -4,15 +4,14 @@
 
 namespace miit::algebra
 {
-    template <typename T>
-    class RandomGenerator : public Generator<T>
+    class RandomGenerator : public Generator
     {
     private:
-        std::uniform_int_distribution<T> distribution;
+        std::uniform_int_distribution<int> distribution;
         std::mt19937 generator;
 
     public:
-        RandomGenerator(const T min, const T max);
-        T generate() override;
+        RandomGenerator(const int min, const int max);
+        int generate() override;
     };
 }
