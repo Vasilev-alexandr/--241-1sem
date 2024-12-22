@@ -16,9 +16,7 @@ public:
 
     void addSchedule(std::shared_ptr<Schedule> schedule);
 
-    void printInfo() const;
-
-    void printSchedules() const;
+    std::string toString() const;
 
 private:
     Doctor(const std::string& name, const std::string& specialty);

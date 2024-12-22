@@ -25,23 +25,7 @@ void Patient::addAppointment(std::shared_ptr<Schedule>& schedule)
     schedule->getPatient() = shared_from_this();
 }
 
-void Patient::printInfo() const
+std::string Patient::toString() const
 {
-    std::cout << "Пациент: " << name << ", Возраст: " << age << std::endl;
-}
-
-void Patient::printAppointments() const
-{
-    std::cout << "Записи на прием: " << std::endl;
-    for (const auto& weakSchedule : schedules)
-    {
-        if (auto schedule = weakSchedule.lock())
-        {
-            schedule->print();
-        }
-        else
-        {
-            std::cout << "Расписание больше не существует." << std::endl;
-        }
-    }
+    return "Patient: " + name + ", Age: " + std::to_string(age);
 }

@@ -23,23 +23,7 @@ void Doctor::addSchedule(std::shared_ptr<Schedule> schedule)
     schedule ->getDoctor() = shared_from_this();
 }
 
-void Doctor::printInfo() const
+std::string Doctor::toString() const
 {
-    std::cout << "Врач: " << name << ", Специальность: " << specialty << std::endl;
-    printSchedules();
-}
-
-void Doctor::printSchedules() const 
-{
-    std::cout << "Расписания врача:" << std::endl;
-    for (const auto& weakSchedule : schedules)
-    {
-        if (auto schedule = weakSchedule.lock())
-        {
-            schedule->print();
-        }
-        else {
-            std::cout << "Расписание больше не существует." << std::endl;
-        }
-    }
+    return "Doctor: " + name + ", Specialty: " + specialty;
 }

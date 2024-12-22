@@ -16,9 +16,7 @@ public:
 
     void addAppointment(std::shared_ptr<Schedule>& schedule);
 
-    void printInfo() const;
-
-    void printAppointments() const;
+    std::string toString() const;
 
 private:
     Patient(const std::string& name, int age);

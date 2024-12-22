@@ -1,6 +1,6 @@
 #include <iostream>
 #include <memory>
-#include <locale>
+#include <chrono>
 #include "..//Solver/Doctor.h"
 #include "..//Solver/Patient.h"
 #include "..//Solver/Schedule.h"
@@ -14,20 +14,17 @@ int main() {
     auto patient1 = Patient::CreatePatient("Сидоров С.С.", 45);
     auto patient2 = Patient::CreatePatient("Волкова А.А.", 32);
 
-    auto schedule1 = Schedule::CreateSchedule(doctor1, patient1);
-    auto schedule2 = Schedule::CreateSchedule(doctor2, patient2);
+    auto schedule1 = Schedule::CreateSchedule(doctor1, patient1, std::chrono::system_clock::now());
+    auto schedule2 = Schedule::CreateSchedule(doctor2, patient2, std::chrono::system_clock::now() + std::chrono::hours(1));
 
-    std::cout << "Информация о врачах:" << std::endl;
-    doctor1->printInfo();
-    doctor2->printInfo();
+    std::cout << schedule1->toString() << std::endl;
+    std::cout << schedule2->toString() << std::endl;
 
-    std::cout << "\nИнформация о пациентах:" << std::endl;
-    patient1->printInfo();
-    patient2->printInfo();
+    std::cout << doctor1->toString() << std::endl;
+    std::cout << doctor2->toString() << std::endl;
 
-    std::cout << "\nЗаписи пациентов:" << std::endl;
-    patient1->printAppointments();
-    patient2->printAppointments();
+    std::cout << patient1->toString() << std::endl;
+    std::cout << patient2->toString() << std::endl;
 
     return 0;
 }
