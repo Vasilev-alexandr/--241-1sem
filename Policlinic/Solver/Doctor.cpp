@@ -1,29 +1,61 @@
 #include "Doctor.h"
-#include "Schedule.h"
-#include <iostream>
+#include <sstream>
+#include <iomanip>
 
-Doctor::Doctor(const std::string& name, const std::string& specialty) : name(name), specialty(specialty) {}
+Doctor::Doctor(const std::string& name, const std::string& specialization,
+    const std::chrono::system_clock::time_point& workStartTime,
+    const std::chrono::system_clock::time_point& workEndTime)
+    : name(name), specialization(specialization), workStartTime(workStartTime), workEndTime(workEndTime) {}
 
-std::shared_ptr<Doctor> Doctor::CreateDoctor(const std::string& name, const std::string& specialty)
+std::shared_ptr<Doctor> Doctor::CreateDoctor(const std::string& name, const std::string& specialization,
+    const std::chrono::system_clock::time_point& workStartTime,
+    const std::chrono::system_clock::time_point& workEndTime)
 {
-    return std::make_shared<Doctor>(name, specialty);
+    return std::make_shared<Doctor>(name, specialization, workStartTime, workEndTime);
 }
 
-std::string Doctor::getName() const
+std::string Doctor::ToString() const
+{
+    std::ostringstream oss;
+    oss << "Доктор: " << name << ", Специализация: " << specialization
+        << ", Рабочее время: " << GetFormattedWorkStartTime() << " - " << GetFormattedWorkEndTime();
+    return oss.str();
+}
+
+const std::string& Doctor::GetName() const
 {
     return name;
 }
-std::string Doctor::getSpecialty() const
+
+const std::string& Doctor::GetSpecialization() const 
 {
-    return specialty;
-}
-void Doctor::addSchedule(std::shared_ptr<Schedule> schedule)
-{
-    schedules.push_back(schedule);
-    schedule ->getDoctor() = shared_from_this();
+    return specialization;
 }
 
-std::string Doctor::toString() const
+std::chrono::system_clock::time_point Doctor::GetWorkStartTime() const
 {
-    return "Doctor: " + name + ", Specialty: " + specialty;
+    return workStartTime;
+}
+
+std::chrono::system_clock::time_point Doctor::GetWorkEndTime() const 
+{
+    return workEndTime;
+}
+
+std::string Doctor::GetFormattedWorkStartTime() const
+{
+    std::time_t time = std::chrono::system_clock::to_time_t(workStartTime);
+    std::tm* tm = std::localtime(&time);
+    std::ostringstream oss;
+    oss << std::put_time(tm, "%H:%M");
+    return oss.str();
+}
+
+std::string Doctor::GetFormattedWorkEndTime() const
+{
+    std::time_t time = std::chrono::system_clock::to_time_t(workEndTime);
+    std::tm* tm = std::localtime(&time);
+    std::ostringstream oss;
+    oss << std::put_time(tm, "%H:%M");
+    return oss.str();
 }

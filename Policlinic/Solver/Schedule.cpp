@@ -1,59 +1,51 @@
 #include "Schedule.h"
-#include "Patient.h"
-#include "Doctor.h"
+#include <iostream>
 #include <sstream>
-#include <iomanip>
-#include <ctime>
 
-Schedule::Schedule(std::chrono::system_clock::time_point appointmentTime) : appointmentTime(appointmentTime) {}
-
-std::shared_ptr<Schedule> Schedule::CreateScheduleWithTime(std::chrono::system_clock::time_point appointmentTime)
+std::shared_ptr<Schedule> Schedule::CreateSchedule()
 {
-    return std::make_shared<Schedule>(appointmentTime);
+    return std::make_shared<Schedule>();
 }
 
-std::shared_ptr<Schedule> Schedule::CreateSchedule(std::shared_ptr<Doctor> doctor,
-    std::shared_ptr<Patient> patient,
-    std::chrono::system_clock::time_point appointmentTime)
+void Schedule::AddPatient(const std::shared_ptr<Patient>& patient)
 {
-    auto schedule = std::make_shared<Schedule>(appointmentTime);
-
-    schedule->AddDoctor(doctor);
-    schedule->AddPatient(patient);
-
-    return schedule;
+    patients.push_back(patient);
 }
 
-void Schedule::AddDoctor(std::shared_ptr<Doctor> doctor)
+void Schedule::AddDoctor(const std::shared_ptr<Doctor>& doctor)
 {
-    this->doctor = doctor;
+    doctors.push_back(doctor);
 }
 
-void Schedule::AddPatient(std::shared_ptr<Patient> patient)
+void Schedule::PrintSchedule() const
 {
-    this->patient = patient;
+    std::cout << "Доктора в расписании:\n";
+    for (const auto& doctor : doctors)
+    {
+        std::cout << doctor->ToString() << std::endl;
+    }
+
+    std::cout << "\nПациенты в расписании:\n";
+    for (const auto& patient : patients)
+    {
+        std::cout << patient->ToString() << std::endl;
+    }
 }
 
-std::string Schedule::toString() const
+std::string Schedule::ToString() const
 {
     std::ostringstream oss;
+    oss << "Расписание приема:\n";
 
-    auto time = std::chrono::system_clock::to_time_t(appointmentTime);
-    std::tm tm = *std::localtime(&time);
+    for (const auto& doctor : doctors)
+    {
+        oss << doctor->ToString() << "\n";
+    }
 
-    oss << "Расписание для пациента: " << (patient ? patient->getName() : "Неизвестно")
-        << " с врачом: " << (doctor ? doctor->getName() : "Неизвестно")
-        << " на " << std::put_time(&tm, "%Y-%m-%d %H:%M:%S");
+    for (const auto& patient : patients)
+    {
+        oss << patient->ToString() << "\n";
+    }
 
     return oss.str();
-}
-
-std::shared_ptr<Doctor> Schedule::getDoctor()
-{
-    return doctor;
-}
-
-std::shared_ptr<Patient> Schedule::getPatient()
-{
-    return patient;
 }
