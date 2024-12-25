@@ -1,10 +1,10 @@
 #pragma once
-#include <string>
-#include <vector>
 #include <memory>
+#include <vector>
 #include <chrono>
-#include "Patient.h"
+#include <iostream>
 #include "Doctor.h"
+#include "Patient.h"
 
 /**
 * @class Schedule
@@ -28,7 +28,7 @@ public:
     * пациентов, который хранится в объекте расписания.
     * @param patient Умный указатель на объект пациента, который необходимо добавить.
     */
-    void AddPatient(const std::shared_ptr<Patient>& patient);
+    void AddPatient(const std::shared_ptr<Patient>& patient, const std::chrono::system_clock::time_point& appointmentTime);
 
     /**
     * @brief Добавляет врача в расписание.
@@ -36,7 +36,9 @@ public:
     * врачей, который хранится в объекте расписания.
     * @param doctor Умный указатель на объект врача, которого необходимо добавить.
     */
-    void AddDoctor(const std::shared_ptr<Doctor>& doctor);
+    void AddDoctor(const std::shared_ptr<Doctor>& doctor,
+        const std::chrono::system_clock::time_point& workStartTime,
+        const std::chrono::system_clock::time_point& workEndTime);
 
     /**
     * @brief Выводит расписание пациентов и врачей.
@@ -57,6 +59,19 @@ public:
     std::string ToString() const;
 
 private:
+    struct DoctorSchedule {
+        std::shared_ptr<Doctor> doctor;
+        std::chrono::system_clock::time_point workStartTime;
+        std::chrono::system_clock::time_point workEndTime;
+    };
+
+    struct PatientSchedule {
+        std::shared_ptr<Patient> patient;
+        std::chrono::system_clock::time_point appointmentTime;
+    };
+
+    std::vector<DoctorSchedule> doctorSchedules;
+    std::vector<PatientSchedule> patientSchedules;
     std::vector<std::shared_ptr<Patient>> patients;
     std::vector<std::shared_ptr<Doctor>> doctors;
 };

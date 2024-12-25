@@ -1,21 +1,15 @@
 #include "Patient.h"
-#include <sstream>
-#include <iomanip>
 
-Patient::Patient(const std::string& name, int age, const std::chrono::system_clock::time_point& appointmentTime)
-    : name(name), age(age), appointmentTime(appointmentTime) {}
+Patient::Patient(const std::string& name, int age) {}
 
-std::shared_ptr<Patient> Patient::CreatePatient(const std::string& name, int age, const std::chrono::system_clock::time_point& appointmentTime)
+std::shared_ptr<Patient> Patient::CreatePatient(const std::string& name, int age)
 {
-    return std::make_shared<Patient>(name, age, appointmentTime);
+    return std::make_shared<Patient>(name, age);
 }
 
 std::string Patient::ToString() const
 {
-    std::ostringstream oss;
-    oss << "Пациент: " << name << ", Возраст: " << age
-        << ", Время записи: " << GetFormattedAppointmentDate();
-    return oss.str();
+    return "Пациент: " + name + ", Возраст: " + std::to_string(age);
 }
 
 const std::string& Patient::GetName() const
@@ -26,18 +20,4 @@ const std::string& Patient::GetName() const
 int Patient::GetAge() const
 {
     return age;
-}
-
-std::chrono::system_clock::time_point Patient::GetAppointmentTime() const
-{ 
-    return appointmentTime;
-}
-
-std::string Patient::GetFormattedAppointmentDate() const
-{
-    std::time_t time = std::chrono::system_clock::to_time_t(appointmentTime);
-    std::tm* tm = std::localtime(&time);
-    std::ostringstream oss;
-    oss << std::put_time(tm, "%Y-%m-%d %H:%M");
-    return oss.str();
 }

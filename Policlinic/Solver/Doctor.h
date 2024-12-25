@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
-#include <chrono>
+#include <memory>
+#include "Schedule.h"
 
 /**
 * @class Doctor
@@ -21,9 +22,7 @@ public:
     * @param workEndTime Время окончания рабочего дня.
     * @return Умный указатель на созданный объект врача.
     */
-    static std::shared_ptr<Doctor> CreateDoctor(const std::string& name, const std::string& specialization,
-        const std::chrono::system_clock::time_point& workStartTime,
-        const std::chrono::system_clock::time_point& workEndTime);
+    static std::shared_ptr<Doctor> CreateDoctor(const std::string& name, const std::string& specialization);
 
     /**
     * @brief Преобразует объект в строку с информацией о враче.
@@ -47,36 +46,7 @@ public:
     */
     const std::string& GetSpecialization() const;
 
-    /**
-    * @brief Получить время начала рабочего дня врача.
-    * Данный метод возвращает время начала рабочего дня врача в виде `std::chrono::system_clock::time_point`.
-    * @return Время начала рабочего дня.
-    */
-    std::chrono::system_clock::time_point GetWorkStartTime() const;
-
-    /**
-    * @brief Получить время окончания рабочего дня врача.
-    * Данный метод возвращает время окончания рабочего дня врача в виде `std::chrono::system_clock::time_point`.
-    * @return Время окончания рабочего дня.
-    */
-    std::chrono::system_clock::time_point GetWorkEndTime() const;
-
-    /**
-    * @brief Форматированное строковое представление времени начала рабочего дня.
-    * Данный метод используется для преобразования времени начала рабочего дня врача в строку,
-    * которая представляется в формате "часы:минуты".
-    * @return Время начала рабочего дня в формате "HH:MM".
-    */
-    std::string GetFormattedWorkStartTime() const;
-
-    /**
-    * @brief Форматированное строковое представление времени окончания рабочего дня.
-    * Данный метод используется для преобразования времени окончания рабочего дня врача в строку,
-    * которая представляется в формате "часы:минуты".
-    * @return Время окончания рабочего дня в формате "HH:MM".
-    */
-    std::string GetFormattedWorkEndTime() const;
-
+    std::shared_ptr<Schedule> schedule;
 private:
     /**
     * @brief Конструктор для создания объекта `Doctor`.
@@ -87,12 +57,10 @@ private:
     * @param workStartTime Время начала рабочего дня.
     * @param workEndTime Время окончания рабочего дня.
     */
-    Doctor(const std::string& name, const std::string& specialization,
-        const std::chrono::system_clock::time_point& workStartTime,
-        const std::chrono::system_clock::time_point& workEndTime);
+    Doctor(const std::string& name, const std::string& specialization);
 
     std::string name;
     std::string specialization;
-    std::chrono::system_clock::time_point workStartTime;
-    std::chrono::system_clock::time_point workEndTime;
+    
+    
 };
