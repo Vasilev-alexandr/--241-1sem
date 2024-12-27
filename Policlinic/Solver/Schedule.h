@@ -28,7 +28,7 @@ public:
     * пациентов, который хранится в объекте расписания.
     * @param patient Умный указатель на объект пациента, который необходимо добавить.
     */
-    void AddPatient(const std::shared_ptr<Patient>& patient, const std::chrono::system_clock::time_point& appointmentTime);
+    void AddPatient(const std::shared_ptr<Patient>& patient);
 
     /**
     * @brief Добавляет врача в расписание.

@@ -15,12 +15,8 @@ Schedule::Schedule(std::chrono::system_clock::time_point workStartTime, std::chr
     : workStartTime(workStartTime), workEndTime(workEndTime) {}
 
 
-void Schedule::AddPatient(const std::shared_ptr<Patient>& patient, const std::chrono::system_clock::time_point& appointmentTime)
+void Schedule::AddPatient(const std::shared_ptr<Patient>& patient)
 {
-    if (appointmentTime < workStartTime || appointmentTime > workEndTime)
-    {
-        throw std::invalid_argument("Прием проводится в нерабочее время врача.");
-    }
     patients.push_back(patient);
     patient->schedule = shared_from_this();
 }

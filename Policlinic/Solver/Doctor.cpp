@@ -25,3 +25,8 @@ const std::string& Doctor::GetSpecialization() const
 {
     return specialization;
 }
+
+std::weak_ptr<Schedule> Doctor::GetSchedule()
+{
+    return schedule;
+}

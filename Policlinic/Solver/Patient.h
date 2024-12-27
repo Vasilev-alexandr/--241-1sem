@@ -43,7 +43,7 @@ public:
     */
     int GetAge() const;
 
-    std::weak_ptr<Schedule> schedule;
+    std::weak_ptr<Schedule> GetSchedule();
 private:
     /**
      * @brief Конструктор для создания экземпляра пациента.
@@ -54,5 +54,6 @@ private:
     Patient(const std::string& name, int age);
     std::string name;
     int age;
+    std::weak_ptr<Schedule> schedule;
     
 };

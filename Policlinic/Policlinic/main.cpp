@@ -15,7 +15,7 @@ int main() {
     auto patient = Patient::CreatePatient("Волков", 45);
 
     schedule->AddDoctor(doctor);
-    schedule->AddPatient(patient, workStartTime + std::chrono::hours(2));
+    schedule->AddPatient(patient);
 
     std::cout << schedule->ToString() << std::endl;
 

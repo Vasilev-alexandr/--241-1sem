@@ -24,3 +24,8 @@ int Patient::GetAge() const
 {
     return age;
 }
+
+std::weak_ptr<Schedule> Patient::GetSchedule()
+{
+    return schedule;
+}
