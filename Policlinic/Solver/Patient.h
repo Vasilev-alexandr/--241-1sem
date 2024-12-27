@@ -43,7 +43,7 @@ public:
     */
     int GetAge() const;
 
-    std::shared_ptr<Schedule> schedule;
+    std::weak_ptr<Schedule> schedule;
 private:
     /**
      * @brief Конструктор для создания экземпляра пациента.

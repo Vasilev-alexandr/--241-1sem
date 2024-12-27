@@ -20,7 +20,7 @@ public:
     * в котором пока нет пациентов и врачей.
     * @return Умный указатель на созданное расписание.
     */
-    static std::shared_ptr<Schedule> CreateSchedule();
+    static std::shared_ptr<Schedule> CreateSchedule(std::chrono::system_clock::time_point workStartTime, std::chrono::system_clock::time_point workEndTime);
 
     /**
     * @brief Добавляет пациента в расписание.
@@ -36,18 +36,7 @@ public:
     * врачей, который хранится в объекте расписания.
     * @param doctor Умный указатель на объект врача, которого необходимо добавить.
     */
-    void AddDoctor(const std::shared_ptr<Doctor>& doctor,
-        const std::chrono::system_clock::time_point& workStartTime,
-        const std::chrono::system_clock::time_point& workEndTime);
-
-    /**
-    * @brief Выводит расписание пациентов и врачей.
-    * Этот метод выводит в консоль сводную информацию о всех пациентах и врачах,
-    * записанных в расписании. Для каждого пациента выводится информация о его имени
-    * и времени записи, а для каждого врача — информация о его имени, специализации
-    * и рабочем времени.
-    */
-    void PrintSchedule() const;
+    void AddDoctor(const std::shared_ptr<Doctor>& doctor);
 
     /**
     * @brief Преобразует расписание в строковое представление.
@@ -59,19 +48,9 @@ public:
     std::string ToString() const;
 
 private:
-    struct DoctorSchedule {
-        std::shared_ptr<Doctor> doctor;
-        std::chrono::system_clock::time_point workStartTime;
-        std::chrono::system_clock::time_point workEndTime;
-    };
-
-    struct PatientSchedule {
-        std::shared_ptr<Patient> patient;
-        std::chrono::system_clock::time_point appointmentTime;
-    };
-
-    std::vector<DoctorSchedule> doctorSchedules;
-    std::vector<PatientSchedule> patientSchedules;
+    Schedule(std::chrono::system_clock::time_point workStartTime, std::chrono::system_clock::time_point workEndTime);
     std::vector<std::shared_ptr<Patient>> patients;
     std::vector<std::shared_ptr<Doctor>> doctors;
+    std::chrono::system_clock::time_point workStartTime;
+    std::chrono::system_clock::time_point workEndTime;
 };

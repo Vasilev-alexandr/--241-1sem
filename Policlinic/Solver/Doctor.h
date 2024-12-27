@@ -46,7 +46,7 @@ public:
     */
     const std::string& GetSpecialization() const;
 
-    std::shared_ptr<Schedule> schedule;
+    std::weak_ptr<Schedule> schedule;
 private:
     /**
     * @brief Конструктор для создания объекта `Doctor`.
@@ -61,6 +61,5 @@ private:
 
     std::string name;
     std::string specialization;
-    
     
 };
