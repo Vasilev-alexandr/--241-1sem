@@ -1,19 +1,18 @@
 #include <iostream>
-#include <chrono>
-#include <memory>
-#include "Schedule.h"
+#include "..\Solver\Schedule.h"
 #include "..\\Solver\Patient.h"
 #include "..\\Solver\Doctor.h"
 
 int main() {
+    setlocale(LC_ALL, "Russian");
     std::chrono::system_clock::time_point workStartTime = std::chrono::system_clock::now();
     std::chrono::system_clock::time_point workEndTime = workStartTime + std::chrono::hours(8);
 
-    auto schedule = std::make_shared<Schedule>(workStartTime, workEndTime);
+    auto schedule = Schedule::CreateSchedule(workStartTime, workEndTime);
 
-    auto doctor = std::make_shared<Doctor>("Иванов", "Кардиолог");
+    auto doctor = Doctor::CreateDoctor("Иванов", "Кардиолог");
 
-    auto patient = std::make_shared<Patient>("Волков", 45);
+    auto patient = Patient::CreatePatient("Волков", 45);
 
     schedule->AddDoctor(doctor);
     schedule->AddPatient(patient);

@@ -1,7 +1,15 @@
 #pragma once
-#include <string>
-#include <memory>
+#include <iostream>
 #include "Schedule.h"
+#include <sstream>
+
+/**
+* @class Schedule
+* @brief Класс для управления расписанием врачей и пациентов.
+* Класс `Schedule` позволяет хранить информацию о врачах и пациентах, а также управлять
+* расписанием, добавлять пациентов и врачей, а также выводить информацию о записях.
+*/
+class Schedule;
 
 /**
 * @class Patient
@@ -17,7 +25,6 @@ public:
     * с заданными параметрами (имя, возраст, время записи).
     * @param name Имя пациента.
     * @param age Возраст пациента.
-    * @param appointmentTime Время записи на прием.
     * @return Умный указатель на созданный объект пациента.
     */
     static std::shared_ptr<Patient> CreatePatient(const std::string& name, int age);
@@ -34,7 +41,7 @@ public:
     * Этот метод возвращает имя пациента.
     * @return Строка с именем пациента.
     */
-    const std::string& GetName() const;
+    const std::string GetName() const;
 
     /**
     * @brief Геттер для получения возраста пациента.
@@ -43,7 +50,20 @@ public:
     */
     int GetAge() const;
 
-    std::shared_ptr<Schedule> GetSchedule() const;
+    /**
+    * @brief Геттер для получения расписания пациента.
+    * Этот метод возвращает расписание пациента.
+    * @return Расписание пациента.
+    */
+    std::weak_ptr<Schedule>& GetSchedule();
+
+    /**
+    * @brief Геттер для получения расписания пациента.
+    * Этот метод возвращает расписание пациента.
+    * @return Расписание пациента.
+    */
+    const std::weak_ptr<Schedule>& GetSchedule() const;
+
 private:
     /**
      * @brief Конструктор для создания экземпляра пациента.
@@ -52,7 +72,19 @@ private:
      * @param age Возраст пациента.
      */
     Patient(const std::string& name, int age);
+
+    /**
+    * @brief Имя пациента.
+    */
     std::string name;
+
+    /**
+    * @brief Возраст пациента.
+    */
     int age;
+
+    /**
+    * @brief Расписание пациента.
+    */
     std::weak_ptr<Schedule> schedule;
 };

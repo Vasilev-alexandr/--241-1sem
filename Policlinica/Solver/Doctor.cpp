@@ -1,12 +1,11 @@
 #include "Doctor.h"
-#include <sstream>
 
-Doctor::Doctor(const std::string& name, const std::string& specialization)
-    : name(name), specialization(specialization) {}
+Doctor::Doctor(const std::string& Name, const std::string& Specialization)
+    : name{ Name }, specialization{ Specialization } {}
 
-std::shared_ptr<Doctor> Doctor::CreateDoctor(const std::string& name, const std::string& specialization)
+std::shared_ptr<Doctor> Doctor::CreateDoctor(const std::string& Name, const std::string& Specialization)
 {
-    return std::shared_ptr<Doctor>(new Doctor(name, specialization));
+    return std::make_shared<Doctor>(Doctor{ Name, Specialization });
 }
 
 std::string Doctor::ToString() const
@@ -16,17 +15,22 @@ std::string Doctor::ToString() const
     return ss.str();
 }
 
-const std::string& Doctor::GetName() const
+const std::string Doctor::GetName() const
 {
     return name;
 }
 
-const std::string& Doctor::GetSpecialization() const
+const std::string Doctor::GetSpecialization() const
 {
     return specialization;
 }
 
-std::weak_ptr<Schedule> Doctor::GetSchedule() const
+std::weak_ptr<Schedule>& Doctor::GetSchedule()
 {
-    return schedule.lock();
+    return schedule;
+}
+
+const std::weak_ptr<Schedule>& Doctor::GetSchedule() const
+{
+    return schedule;
 }

@@ -1,11 +1,10 @@
 #include "Patient.h"
-#include <sstream>
 
 Patient::Patient(const std::string& name, int age) : name(name), age(age) {}
 
 std::shared_ptr<Patient> Patient::CreatePatient(const std::string& name, int age)
 {
-    return std::shared_ptr<Patient>(new Patient(name, age));
+    return std::make_shared<Patient>(Patient{ name, age });
 }
 
 std::string Patient::ToString() const
@@ -15,7 +14,7 @@ std::string Patient::ToString() const
     return ss.str();
 }
 
-const std::string& Patient::GetName() const
+const std::string Patient::GetName() const
 {
     return name;
 }
@@ -25,7 +24,12 @@ int Patient::GetAge() const
     return age;
 }
 
-std::shared_ptr<Schedule> Patient::GetSchedule() const
+std::weak_ptr<Schedule>& Patient::GetSchedule()
 {
-    return schedule.lock();
+    return schedule;
+}
+
+const std::weak_ptr<Schedule>& Patient::GetSchedule() const
+{
+    return schedule;
 }

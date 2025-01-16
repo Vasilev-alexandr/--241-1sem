@@ -1,7 +1,15 @@
 #pragma once
-#include <string>
-#include <memory>
+#include <iostream>
 #include "Schedule.h"
+#include <sstream>
+
+/**
+* @class Schedule
+* @brief Класс для управления расписанием врачей и пациентов.
+* Класс `Schedule` позволяет хранить информацию о врачах и пациентах, а также управлять
+* расписанием, добавлять пациентов и врачей, а также выводить информацию о записях.
+*/
+class Schedule;
 
 /**
 * @class Doctor
@@ -18,11 +26,9 @@ public:
     * с заданными параметрами (имя, специализация, время начала и окончания рабочего дня).
     * @param name Имя врача.
     * @param specialization Специализация врача (например, терапевт, кардиолог и т.д.).
-    * @param workStartTime Время начала рабочего дня.
-    * @param workEndTime Время окончания рабочего дня.
     * @return Умный указатель на созданный объект врача.
     */
-    static std::shared_ptr<Doctor> CreateDoctor(const std::string& name, const std::string& specialization);
+    static std::shared_ptr<Doctor> CreateDoctor(const std::string& Name, const std::string& Specialization);
 
     /**
     * @brief Преобразует объект в строку с информацией о враче.
@@ -37,16 +43,29 @@ public:
     * Данный метод возвращает имя врача.
     * @return Имя врача.
     */
-    const std::string& GetName() const;
+    const std::string GetName() const;
 
     /**
     * @brief Получить специализацию врача.
     * Данный метод возвращает специализацию врача.
     * @return Специализация врача.
     */
-    const std::string& GetSpecialization() const;
+    const std::string GetSpecialization() const;
 
-    std::shared_ptr<Schedule> GetSchedule() const;
+    /**
+    * @brief Получить расписание врача.
+    * Данный метод возвращает расписание врача.
+    * @return Расписание врача.
+    */
+    std::weak_ptr<Schedule>& GetSchedule();
+
+    /**
+    * @brief Получить расписание врача.
+    * Данный метод возвращает расписание врача.
+    * @return Расписание врача.
+    */
+    const std::weak_ptr<Schedule>& GetSchedule() const;
+
 private:
     /**
     * @brief Конструктор для создания объекта `Doctor`.
@@ -54,13 +73,22 @@ private:
     * Все параметры необходимы для инициализации данных объекта.
     * @param name Имя врача.
     * @param specialization Специализация врача.
-    * @param workStartTime Время начала рабочего дня.
-    * @param workEndTime Время окончания рабочего дня.
     */
-    Doctor(const std::string& name, const std::string& specialization);
+    Doctor(const std::string& Name, const std::string& Specialization);
 
+    /**
+    * @brief Имя врача.
+    */
     std::string name;
+
+    /**
+    * @brief Специализация врача.
+    */
     std::string specialization;
+
+    /**
+    * @brief Расписание врача.
+    */
     std::weak_ptr<Schedule> schedule;
 
 };
